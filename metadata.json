@@ -1,0 +1,6 @@
+{
+  "name": "OneGov Zambia — Digital Government Ecosystem",
+  "description": "Unified intelligent digital-government platform for Zambia: Citizen dashboard, SME permits, Transport (RTSA), Land rates, ZESCO utilities, Education, ZRA Master Revenue Oversight, GIS Council Revenue Intelligence, and PACRA IP Portal.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

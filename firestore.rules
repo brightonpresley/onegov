@@ -1,0 +1,223 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Global Safety Net (Default Deny)
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // ==========================
+    // Global Hardened Primitives
+    // ==========================
+    function isValidId(id) {
+      return id is string && id.size() >= 1 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isVerifiedUser() {
+      return isSignedIn() && request.auth.token.email_verified == true;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isVerifiedUser() && (
+        request.auth.token.email == 'brightonsinaz@gmail.com' ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      );
+    }
+
+    // ==========================
+    // Validation Blueprints
+    // ==========================
+    function isValidUserWorkspaceProfile(data, userId) {
+      return data.keys().hasAll(['uid', 'displayName', 'preferredLanguage', 'lowDataMode', 'createdAt', 'updatedAt'])
+        && data.keys().hasOnly(['uid', 'displayName', 'preferredLanguage', 'lowDataMode', 'createdAt', 'updatedAt'])
+        && data.uid is string
+        && data.uid.size() >= 1 && data.uid.size() <= 128
+        && data.uid.matches('^[a-zA-Z0-9_\\-]+$')
+        && data.uid == userId
+        && data.displayName is string
+        && data.displayName.size() >= 1 && data.displayName.size() <= 120
+        && data.preferredLanguage in ['English', 'Icibemba', 'Chinyanja', 'Chitonga']
+        && data.lowDataMode is bool
+        && data.createdAt is timestamp
+        && data.updatedAt is timestamp;
+    }
+
+    function isValidUserPrivateInfo(data, userId) {
+      return data.keys().hasAll(['uid', 'email', 'createdAt', 'updatedAt'])
+        && data.keys().hasOnly(['uid', 'email', 'phone', 'createdAt', 'updatedAt'])
+        && data.uid is string
+        && data.uid.size() >= 1 && data.uid.size() <= 128
+        && data.uid.matches('^[a-zA-Z0-9_\\-]+$')
+        && data.uid == userId
+        && data.email is string
+        && data.email.size() >= 3 && data.email.size() <= 200
+        && (!('phone' in data) || (data.phone is string && data.phone.size() <= 32))
+        && data.createdAt is timestamp
+        && data.updatedAt is timestamp;
+    }
+
+    function isValidSavedCivicLocation(data) {
+      return data.keys().hasAll(['ownerId', 'title', 'institutionCode', 'latitude', 'longitude', 'createdAt', 'updatedAt'])
+        && data.keys().hasOnly(['ownerId', 'title', 'institutionCode', 'zoneCode', 'mapsUri', 'notes', 'latitude', 'longitude', 'createdAt', 'updatedAt'])
+        && data.ownerId is string
+        && data.ownerId.size() >= 1 && data.ownerId.size() <= 128
+        && data.ownerId.matches('^[a-zA-Z0-9_\\-]+$')
+        && data.title is string
+        && data.title.size() >= 1 && data.title.size() <= 160
+        && data.institutionCode is string
+        && data.institutionCode.size() >= 2 && data.institutionCode.size() <= 24
+        && data.institutionCode.matches('^[A-Z0-9_\\-]+$')
+        && (!('zoneCode' in data) || (data.zoneCode is string && data.zoneCode.size() <= 40))
+        && (!('mapsUri' in data) || (data.mapsUri is string && data.mapsUri.size() <= 500))
+        && (!('notes' in data) || (data.notes is string && data.notes.size() <= 500))
+        && data.latitude is number
+        && data.latitude >= -90 && data.latitude <= 90
+        && data.longitude is number
+        && data.longitude >= -180 && data.longitude <= 180
+        && data.createdAt is timestamp
+        && data.updatedAt is timestamp;
+    }
+
+    function isValidVoiceTranscriptNote(data) {
+      return data.keys().hasAll(['ownerId', 'title', 'transcript', 'sourceType', 'createdAt', 'updatedAt'])
+        && data.keys().hasOnly(['ownerId', 'title', 'transcript', 'sourceType', 'sourceUrl', 'createdAt', 'updatedAt'])
+        && data.ownerId is string
+        && data.ownerId.size() >= 1 && data.ownerId.size() <= 128
+        && data.ownerId.matches('^[a-zA-Z0-9_\\-]+$')
+        && data.title is string
+        && data.title.size() >= 1 && data.title.size() <= 160
+        && data.transcript is string
+        && data.transcript.size() >= 1 && data.transcript.size() <= 4000
+        && data.sourceType in ['transcription', 'live_voice', 'search_grounding', 'maps_grounding']
+        && (!('sourceUrl' in data) || (data.sourceUrl is string && data.sourceUrl.size() <= 500))
+        && data.createdAt is timestamp
+        && data.updatedAt is timestamp;
+    }
+
+    // ==========================
+    // Collection Match Blocks
+    // ==========================
+
+    // Connection Probe
+    match /test/{docId} {
+      allow get: if isValidId(docId) && docId == 'connection' && isSignedIn();
+      allow list, create, update, delete: if false;
+    }
+
+    // Admin Registry
+    match /admins/{adminId} {
+      allow get: if isValidId(adminId) && (isOwner(adminId) || isAdmin());
+      allow list, create, update, delete: if false;
+    }
+
+    // User Workspace Profiles (Non-PII preferences)
+    match /users/{userId} {
+      allow get: if isValidId(userId) && (isOwner(userId) || isAdmin());
+      allow list: if false;
+      allow create: if isVerifiedUser()
+        && isValidId(userId)
+        && isOwner(userId)
+        && isValidUserWorkspaceProfile(incoming(), userId)
+        && incoming().createdAt == request.time
+        && incoming().updatedAt == request.time;
+      allow update: if isVerifiedUser()
+        && isValidId(userId)
+        && (isOwner(userId) || isAdmin())
+        && isValidUserWorkspaceProfile(incoming(), userId)
+        && incoming().uid == existing().uid
+        && incoming().createdAt == existing().createdAt
+        && incoming().updatedAt == request.time
+        && incoming().diff(existing()).affectedKeys().hasOnly(['displayName', 'preferredLanguage', 'lowDataMode', 'updatedAt']);
+      allow delete: if false;
+
+      // Isolated Private PII Subcollection
+      match /private/{docId} {
+        allow get: if isValidId(userId) && isValidId(docId) && docId == 'info' && (isOwner(userId) || isAdmin());
+        allow list: if false;
+        allow create: if isVerifiedUser()
+          && isValidId(userId)
+          && isValidId(docId)
+          && docId == 'info'
+          && isOwner(userId)
+          && existsAfter(/databases/$(database)/documents/users/$(userId))
+          && isValidUserPrivateInfo(incoming(), userId)
+          && incoming().createdAt == request.time
+          && incoming().updatedAt == request.time;
+        allow update: if isVerifiedUser()
+          && isValidId(userId)
+          && isValidId(docId)
+          && docId == 'info'
+          && (isOwner(userId) || isAdmin())
+          && exists(/databases/$(database)/documents/users/$(userId))
+          && isValidUserPrivateInfo(incoming(), userId)
+          && incoming().uid == existing().uid
+          && incoming().createdAt == existing().createdAt
+          && incoming().updatedAt == request.time
+          && incoming().diff(existing()).affectedKeys().hasOnly(['email', 'phone', 'updatedAt']);
+        allow delete: if false;
+      }
+    }
+
+    // Saved Civic Locations (Owner-scoped + Query Enforcer on list)
+    match /savedLocations/{locationId} {
+      allow get: if isValidId(locationId) && isSignedIn() && (existing().ownerId == request.auth.uid || isAdmin());
+      allow list: if isSignedIn() && resource.data.ownerId == request.auth.uid;
+      allow create: if isVerifiedUser()
+        && isValidId(locationId)
+        && incoming().ownerId == request.auth.uid
+        && isValidSavedCivicLocation(incoming())
+        && incoming().createdAt == request.time
+        && incoming().updatedAt == request.time;
+      allow update: if isVerifiedUser()
+        && isValidId(locationId)
+        && (existing().ownerId == request.auth.uid || isAdmin())
+        && isValidSavedCivicLocation(incoming())
+        && incoming().ownerId == existing().ownerId
+        && incoming().createdAt == existing().createdAt
+        && incoming().updatedAt == request.time
+        && incoming().diff(existing()).affectedKeys().hasOnly(['title', 'institutionCode', 'zoneCode', 'mapsUri', 'notes', 'latitude', 'longitude', 'updatedAt']);
+      allow delete: if isVerifiedUser()
+        && isValidId(locationId)
+        && (existing().ownerId == request.auth.uid || isAdmin());
+    }
+
+    // Voice Transcripts & Grounded Notes (Owner-scoped + Query Enforcer on list)
+    match /voiceNotes/{noteId} {
+      allow get: if isValidId(noteId) && isSignedIn() && (existing().ownerId == request.auth.uid || isAdmin());
+      allow list: if isSignedIn() && resource.data.ownerId == request.auth.uid;
+      allow create: if isVerifiedUser()
+        && isValidId(noteId)
+        && incoming().ownerId == request.auth.uid
+        && isValidVoiceTranscriptNote(incoming())
+        && incoming().createdAt == request.time
+        && incoming().updatedAt == request.time;
+      allow update: if isVerifiedUser()
+        && isValidId(noteId)
+        && (existing().ownerId == request.auth.uid || isAdmin())
+        && isValidVoiceTranscriptNote(incoming())
+        && incoming().ownerId == existing().ownerId
+        && incoming().createdAt == existing().createdAt
+        && incoming().updatedAt == request.time
+        && incoming().diff(existing()).affectedKeys().hasOnly(['title', 'transcript', 'sourceType', 'sourceUrl', 'updatedAt']);
+      allow delete: if isVerifiedUser()
+        && isValidId(noteId)
+        && (existing().ownerId == request.auth.uid || isAdmin());
+    }
+  }
+}

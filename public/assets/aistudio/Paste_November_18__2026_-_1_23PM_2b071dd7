@@ -1,0 +1,1100 @@
+MASTER PROMPT: BUILD ONEGOV – ZAMBIA’S INTELLIGENT DIGITAL GOVERNMENT ECOSYSTEM
+
+1. YOUR ROLE
+
+Act as a world-class multidisciplinary technology development team consisting of:
+
+* A senior software architect.
+* A senior full-stack developer.
+* An AI and machine-learning engineer.
+* A fintech and digital-payments architect.
+* A government digital-transformation consultant.
+* A cybersecurity specialist.
+* A database architect.
+* A senior UI/UX designer.
+* A GIS and data-intelligence engineer.
+* A product manager.
+
+Your responsibility is to design and develop ONEGOV, a complete, modern, AI-powered digital-government services platform designed initially for Zambia.
+
+Do not build merely a website containing government links.
+
+Build an integrated digital ecosystem that allows citizens, small businesses, government institutions, councils and authorised service providers to interact through one platform.
+
+The platform must have AI intelligence embedded throughout its operations, not just a chatbot.
+
+Preserve the original OneGov concept while implementing all the additional capabilities described below.
+
+⸻
+
+2. PRODUCT IDENTITY
+
+Product name: ONEGOV
+
+Tagline:
+ONE CITIZEN. ONE ACCOUNT. ONE PLATFORM. EVERY GOVERNMENT SERVICE.
+
+Initial market: Zambia.
+
+Platforms:
+
+* Android application.
+* iOS application.
+* Responsive web application.
+* Government administration portal.
+* Institutional service-provider portals.
+
+OneGov must operate as an independent digital-government services aggregator and integration platform.
+
+It must complement existing government systems rather than falsely claim to replace them.
+
+Its long-term vision is to make accessing government and participating institutional services easier, faster, more transparent, affordable and intelligent.
+
+⸻
+
+3. THE CORE PROBLEM ONEGOV SOLVES
+
+Citizens and businesses currently encounter fragmented service delivery.
+
+People may need to visit different institutions, websites or offices to:
+
+* Pay road tax.
+* Obtain vehicle-related services.
+* Purchase or renew insurance certificates.
+* Apply for business permits.
+* Pay council levies.
+* Pay land rates.
+* Pay electricity bills.
+* Pay school fees.
+* Apply for licences.
+* Obtain government certificates.
+* Register intellectual property.
+* Track applications.
+* Obtain payment receipts.
+
+OneGov should bring participating services into a unified digital environment.
+
+A citizen should be able to log in once, find a service, submit an application, make a supported payment, receive confirmation and track progress without navigating multiple disconnected platforms.
+
+⸻
+
+4. ONEGOV PLATFORM MODULES
+
+Develop the following interconnected modules.
+
+A. ONEGOV CITIZEN
+
+Create a personal citizen dashboard.
+
+Features:
+
+* Secure account registration and login.
+* Identity verification.
+* Personal profile.
+* Government service discovery.
+* Applications and application tracking.
+* Payment history.
+* Digital receipts.
+* Digital certificates and documents where officially issued.
+* Notifications.
+* Payment reminders.
+* Service history.
+* Saved services.
+* Family-related service management where legally authorised.
+* AI personal government-services assistant.
+
+The dashboard should display:
+
+* Outstanding payments.
+* Pending applications.
+* Upcoming renewals.
+* Recent transactions.
+* Important notifications.
+* Frequently used services.
+
+B. ONEGOV BUSINESS
+
+Create a dedicated platform for entrepreneurs, SMEs, informal traders and established businesses.
+
+This module is extremely important.
+
+Make OneGov affordable, simple and friendly to people who may have limited digital literacy.
+
+Features:
+
+* Business account creation.
+* Guided business registration.
+* Business profile.
+* Business permit applications.
+* Trading licence applications.
+* Council levy payments.
+* Tax-related service discovery.
+* Business compliance reminders.
+* Business document storage.
+* Application tracking.
+* Business payment history.
+* Business certificate management.
+* Business-related government service recommendations.
+* AI business assistant.
+
+The AI assistant should help entrepreneurs understand:
+
+* Which permits they need.
+* Which services they must apply for.
+* Which obligations are approaching.
+* Which documents they need.
+* Which payments are outstanding.
+* Where to submit applications.
+
+Allow simple guided workflows rather than expecting every entrepreneur to understand government procedures.
+
+Support low-data usage, accessible interfaces and local-language expansion.
+
+C. ONEGOV TRANSPORT
+
+Include:
+
+* Road tax payments.
+* Vehicle licence services.
+* Vehicle registration-related services.
+* Vehicle insurance certificates.
+* Vehicle document management.
+* Renewal reminders.
+* Application tracking.
+* Digital receipts.
+
+Allow authorised RTSA and insurance integrations.
+
+D. ONEGOV PROPERTY AND LAND
+
+Include:
+
+* Land rates payments.
+* Property records and document management.
+* Council property-related payments.
+* Land-related applications.
+* Property payment history.
+* Outstanding rates.
+* Payment reminders.
+* Property-related service tracking.
+
+Support authorised institutional verification.
+
+E. ONEGOV UTILITIES
+
+Include:
+
+* Electricity bill payments.
+* Electricity account management.
+* Utility payment history.
+* Payment receipts.
+* Reminders.
+* Participating utility-provider integrations.
+
+Design the system so other utility services can be introduced later.
+
+F. ONEGOV EDUCATION
+
+Include:
+
+* School fee payments.
+* Participating school and university accounts.
+* Student-related payment records.
+* Fee statements.
+* Digital receipts.
+* Payment tracking.
+* Education-related service discovery.
+
+Each participating educational institution must manage only its authorised services and records.
+
+G. ONEGOV LICENCES AND PERMITS
+
+Include:
+
+* Business permits.
+* Trading licences.
+* Council licences.
+* Government permits.
+* Licence renewals.
+* Application tracking.
+* Document submission.
+* Payment processing.
+* Notifications.
+
+Allow authorised institutions to review, approve or reject applications.
+
+H. ONEGOV PAYMENTS
+
+Create a central payment infrastructure.
+
+Features:
+
+* Integrated payment gateway architecture.
+* Mobile money support.
+* Bank payment integration.
+* Card payment support.
+* Transaction references.
+* Payment verification.
+* Digital receipts.
+* Payment history.
+* Refund workflows.
+* Reconciliation.
+* Transaction monitoring.
+* Fraud detection.
+
+Never display a payment as successful until verified by the payment provider or authorised payment system.
+
+Allow a unified payment experience while ensuring money is allocated to the correct participating institution.
+
+⸻
+
+5. ONEGOV INTELIGENCE – AI ENGINE
+
+AI must be embedded throughout the entire ecosystem.
+
+Do not restrict AI functionality to a chatbot.
+
+Build an intelligent platform with the following capabilities.
+
+AI Government Assistant
+
+A conversational assistant that helps citizens:
+
+* Discover services.
+* Understand government procedures.
+* Find application requirements.
+* Understand payments.
+* Track applications.
+* Understand notices.
+* Identify relevant institutions.
+
+It should provide answers based on verified government information.
+
+AI Document Intelligence
+
+Implement:
+
+* Document scanning.
+* OCR.
+* Document classification.
+* Information extraction.
+* Missing-document detection.
+* Form assistance.
+* Document validation.
+* Duplicate-document detection where appropriate.
+
+AI Application Assistance
+
+Help users:
+
+* Complete forms.
+* Identify missing information.
+* Understand application requirements.
+* Receive application updates.
+* Understand rejection reasons.
+* Correct incomplete applications.
+
+AI may recommend and assist but must not independently issue official approvals or certificates.
+
+AI Predictive Intelligence
+
+Use historical and verified operational data to:
+
+* Identify service-demand patterns.
+* Predict revenue trends.
+* Identify unusual payment activity.
+* Detect potential revenue leakage.
+* Forecast service workloads.
+* Identify delayed applications.
+* Help institutions plan resources.
+
+AI Fraud and Anomaly Detection
+
+Identify suspicious patterns, including:
+
+* Duplicate transactions.
+* Unusual payment activity.
+* Repeated failed payments.
+* Potential revenue discrepancies.
+* Suspicious account activity.
+* Abnormal application patterns.
+
+Flag cases for authorised human investigation.
+
+AI Personalisation
+
+Recommend services based on a user’s legitimate needs, existing applications, business profile and upcoming obligations.
+
+Ensure data privacy and user consent.
+
+⸻
+
+6. ONEGOV REVENUE INTELLIGENCE – ZRA MASTER REVENUE DASHBOARD
+
+This is one of the platform’s most important differentiating features.
+
+Design a central revenue oversight dashboard for the Zambia Revenue Authority (ZRA).
+
+ZRA should have an authorised overview of revenue activity across participating institutions and service categories.
+
+The dashboard must show:
+
+* Total verified revenue collected.
+* Revenue by institution.
+* Revenue by service category.
+* Revenue by province.
+* Revenue by district.
+* Revenue by local authority.
+* Revenue by council.
+* Revenue by ward or revenue zone.
+* Revenue trends.
+* Outstanding payments.
+* Collection performance.
+* Transaction volumes.
+* Revenue discrepancies.
+* Potential revenue leakages.
+* Reconciliation status.
+
+Provide interactive charts, maps, filters and downloadable reports.
+
+Important:
+ZRA’s central overview must not mean unrestricted access to all personal information or authority over every institution’s operational decisions.
+
+Use role-based permissions and authorised financial reporting.
+
+ZRA must be able to see the appropriate consolidated revenue picture and exercise only the controls legally assigned to it.
+
+⸻
+
+7. COUNCIL REVENUE INTELLIGENCE
+
+Develop a sophisticated AI-powered council revenue analysis system.
+
+OneGov must help councils understand WHICH AREAS ARE NOT GENERATING EXPECTED REVENUE AND WHY.
+
+This should be one of the platform’s most impressive features.
+
+Build an interactive GIS map showing:
+
+* Provinces.
+* Districts.
+* Councils.
+* Wards.
+* Markets.
+* Trading zones.
+* Property revenue zones.
+* Other configured revenue areas.
+
+Each area should have revenue performance indicators.
+
+For example:
+
+Ward A:
+Expected revenue: K100,000.
+Actual verified revenue: K35,000.
+Collection performance: 35%.
+
+Ward B:
+Expected revenue: K100,000.
+Actual verified revenue: K92,000.
+Collection performance: 92%.
+
+These figures are illustrative demo data.
+
+The AI should analyse verified available information and help explain why an area is underperforming.
+
+Possible investigative indicators include:
+
+* Low business registration coverage.
+* Unpaid trading permits.
+* Outstanding market levies.
+* Unpaid property rates.
+* Inactive registered businesses.
+* Incomplete billing records.
+* Failed or incomplete payment reconciliation.
+* Collection-system downtime.
+* Inconsistent records.
+* Unverified revenue assessments.
+
+Do not present assumptions as established facts.
+
+The AI must distinguish between:
+
+1. Confirmed findings.
+2. Possible explanations.
+3. Areas requiring further investigation.
+
+Provide:
+
+* Revenue heatmaps.
+* Area comparisons.
+* Revenue trend analysis.
+* Collection efficiency charts.
+* AI-generated investigation recommendations.
+* Reports for council officers.
+* Follow-up task assignments.
+* Investigation status tracking.
+
+Council officers should be able to investigate and update cases.
+
+The system must help councils make better revenue decisions, not simply display numbers.
+
+⸻
+
+8. PARTICIPATING INSTITUTIONS AND ROLE-BASED ACCESS
+
+OneGov is an ecosystem of participating institutions.
+
+Potential institutions include:
+
+* Zambia Revenue Authority (ZRA).
+* Road Transport and Safety Agency (RTSA).
+* Local authorities and councils.
+* Zambia Electricity Supply Corporation (ZESCO).
+* PACRA.
+* NAPSA.
+* Schools and universities.
+* Insurance providers.
+* Banks.
+* Mobile money providers.
+* Other authorised government institutions.
+
+Build a dedicated portal for every participating institution.
+
+CRITICAL ACCESS RULE:
+
+Every participating institution must only access the services, applications, financial records and operational data that it is authorised to manage.
+
+For example:
+
+ZRA:
+Access to authorised tax and revenue oversight functions.
+
+RTSA:
+Access to authorised vehicle and transport services.
+
+ZESCO:
+Access to authorised electricity services and related payments.
+
+PACRA:
+Access to authorised company registration and intellectual-property services.
+
+Councils:
+Access to their respective council services, permits, property rates, levies and revenue intelligence.
+
+Schools:
+Access to their own authorised education services and student payment records.
+
+Insurance companies:
+Access to their own authorised insurance services.
+
+Implement strict role-based access control, institutional boundaries, audit trails and permission management.
+
+No institution should automatically gain access to another institution’s private operational records.
+
+⸻
+
+9. ONEGOV INTELLECTUAL PROPERTY – PATENT AND TRADEMARK SERVICES
+
+Create a dedicated intellectual-property module.
+
+The objective is to make patent and trademark services easier to access digitally.
+
+Features:
+
+Patent application assistance
+
+* Submit invention descriptions.
+* Upload supporting documents.
+* Record invention details.
+* Submit patent-related applications through authorised channels.
+* Track application progress.
+* Receive notifications.
+
+AI invention similarity checking
+
+Allow inventors to submit their ideas and receive an AI-assisted similarity report.
+
+The AI should:
+
+* Analyse invention descriptions.
+* Search authorised patent and public information databases.
+* Identify potentially similar existing inventions.
+* Compare technical concepts.
+* Highlight similarities.
+* Generate a preliminary similarity report.
+
+Clearly explain that AI similarity checking is not a legal determination of novelty, patentability or infringement.
+
+Trademark services
+
+Include:
+
+* Trademark name searches.
+* Logo submission.
+* Trademark application assistance.
+* Similarity checking.
+* Application tracking.
+* Notifications.
+* Document management.
+
+PACRA integration
+
+Design an authorised integration architecture for PACRA.
+
+PACRA remains the official authority for applicable registration and intellectual-property decisions.
+
+OneGov should facilitate the process rather than claim to grant patents or trademarks itself.
+
+⸻
+
+10. GREEN AND CLIMATE-CONSCIOUS ONEGOV
+
+OneGov must support the Greener Zambia approach.
+
+Do not change the original government-services concept.
+
+Make its operations more environmentally responsible through:
+
+* Digital applications.
+* Paperless receipts.
+* Electronic certificates where officially supported.
+* Digital document storage.
+* Reduced physical office visits.
+* Online payments.
+* Efficient digital workflows.
+* Reduced printing.
+* Energy-efficient infrastructure.
+* Low-data application design.
+
+Do not add unnecessary environmental obligations for citizens or businesses.
+
+The objective is to make government service delivery more efficient while reducing avoidable resource consumption.
+
+⸻
+
+11. USER ROLES AND DASHBOARDS
+
+Build separate dashboards for the following users.
+
+1. Citizen.
+2. Small-business owner.
+3. Business administrator.
+4. Government officer.
+5. Council officer.
+6. Institutional administrator.
+7. ZRA revenue administrator.
+8. Platform super administrator.
+9. Finance and reconciliation officer.
+10. Auditor.
+11. Intellectual-property applicant.
+12. Authorised IP officer.
+
+Every role must have its own appropriate interface and permissions.
+
+The super administrator manages platform configuration, institutional onboarding, user roles and integrations.
+
+The platform administrator must not automatically override legally restricted institutional approvals.
+
+⸻
+
+12. APPLICATION WORKFLOW
+
+Create a reusable application workflow engine.
+
+A typical workflow:
+
+1. User selects a government service.
+2. Platform displays requirements.
+3. AI assists the user in completing the application.
+4. User uploads required documents.
+5. Platform checks completeness.
+6. Application is submitted.
+7. Application is routed to the correct institution.
+8. Authorised officer reviews it.
+9. Officer requests additional information, approves or rejects it.
+10. User receives a notification.
+11. User completes any required payment.
+12. Official confirmation or document is issued through the authorised institution.
+13. OneGov stores the transaction record and application history.
+
+Include configurable workflows because different institutions have different approval procedures.
+
+⸻
+
+13. NOTIFICATIONS AND COMMUNICATION
+
+Implement:
+
+* In-app notifications.
+* Email notifications.
+* SMS integration architecture.
+* Push notifications.
+* Payment reminders.
+* Application status notifications.
+* Licence renewal reminders.
+* Missing-document notifications.
+* Important institutional announcements.
+
+Users should be able to view their notification history.
+
+⸻
+
+14. SECURITY AND TRUST
+
+Security must be built into the architecture.
+
+Implement:
+
+* Secure authentication.
+* Multi-factor authentication.
+* Encryption in transit and at rest.
+* Role-based access control.
+* Institutional data isolation.
+* Secure document storage.
+* Audit logs.
+* Session management.
+* API authentication.
+* Payment verification.
+* Fraud monitoring.
+* Backup and recovery.
+* Rate limiting.
+* Consent management.
+* Data retention policies.
+* Secure administrative access.
+
+Design for compliance with applicable Zambian laws and data-protection requirements.
+
+Use privacy-by-design principles.
+
+Do not expose sensitive citizen information on public dashboards.
+
+⸻
+
+15. DATABASE ARCHITECTURE
+
+Design a scalable relational database.
+
+Include appropriate entities and relationships for:
+
+* Users.
+* User profiles.
+* Identity verification.
+* Businesses.
+* Business owners.
+* Institutions.
+* Institution administrators.
+* Roles.
+* Permissions.
+* Services.
+* Service categories.
+* Applications.
+* Application requirements.
+* Application documents.
+* Application reviews.
+* Payments.
+* Transactions.
+* Receipts.
+* Refunds.
+* Reconciliation records.
+* Notifications.
+* Properties.
+* Vehicles.
+* Utility accounts.
+* Education accounts.
+* Licences.
+* Permits.
+* Revenue assessments.
+* Revenue collections.
+* Revenue zones.
+* Councils.
+* Wards.
+* GIS locations.
+* Revenue reports.
+* AI analysis records.
+* Fraud alerts.
+* Patent applications.
+* Trademark applications.
+* Invention similarity reports.
+* Audit logs.
+* Integration configurations.
+
+Provide:
+
+* ER diagrams.
+* Database relationships.
+* Primary keys.
+* Foreign keys.
+* Indexes.
+* Appropriate constraints.
+* Tenant and institutional isolation strategy.
+* Database migration files.
+
+Use a scalable relational database such as PostgreSQL.
+
+⸻
+
+16. TECHNICAL ARCHITECTURE
+
+Design the system for long-term expansion.
+
+Suggested technology stack:
+
+Frontend:
+
+* Flutter for Android and iOS.
+* React or Next.js for web portals.
+* Modern responsive design.
+
+Backend:
+
+* Python FastAPI or an equivalent scalable framework.
+* REST APIs.
+* Modular service architecture.
+
+Database:
+
+* PostgreSQL.
+* PostGIS for GIS and geographical intelligence.
+* pgvector where vector search is needed.
+
+AI:
+
+* LLM integration.
+* Retrieval-augmented generation.
+* OCR.
+* Document processing.
+* Predictive analytics.
+* Anomaly detection.
+* Vector search.
+
+Infrastructure:
+
+* Cloud-ready architecture.
+* Docker.
+* Secure API gateway.
+* Object storage.
+* Background task processing.
+* Monitoring and logging.
+* Automated backups.
+
+Keep the architecture modular so new institutions and services can be added without rebuilding the entire platform.
+
+⸻
+
+17. USER INTERFACE AND DESIGN
+
+Create a premium, professional, modern government-technology interface.
+
+The platform should feel like a combination of a modern fintech application, an intelligent enterprise dashboard and a national digital-services platform.
+
+Design principles:
+
+* Clean and modern.
+* Mobile-first.
+* Professional.
+* Accessible.
+* Fast.
+* Intuitive.
+* Minimal unnecessary complexity.
+* Consistent navigation.
+* Clear typography.
+* Meaningful charts.
+* Interactive maps.
+* Responsive layouts.
+
+Use a coherent visual identity inspired by modern digital infrastructure and Zambia’s identity.
+
+Suggested colours:
+
+* Deep navy.
+* Emerald green.
+* White.
+* Subtle gold accents.
+
+Create the following screens:
+
+1. Welcome and onboarding.
+2. Registration.
+3. Login.
+4. Citizen dashboard.
+5. Business dashboard.
+6. Government service directory.
+7. Service details.
+8. Application form.
+9. Document upload.
+10. Payment screen.
+11. Digital receipt.
+12. Application tracking.
+13. AI assistant.
+14. Transport services.
+15. Property and land services.
+16. Utilities.
+17. Education.
+18. Licences and permits.
+19. Intellectual-property portal.
+20. Council dashboard.
+21. ZRA revenue dashboard.
+22. GIS revenue intelligence.
+23. Institutional administration.
+24. Platform super administration.
+25. Reports and analytics.
+26. Notifications.
+27. Account and security settings.
+
+Do not create one generic dashboard for every role.
+
+Each dashboard must reflect its user’s responsibilities.
+
+⸻
+
+18. DEMONSTRATION DATA AND PROTOTYPE
+
+Create a functional demonstration environment using clearly labelled simulated data.
+
+The prototype must demonstrate the following complete journey:
+
+DEMO 1: CITIZEN ROAD TAX
+
+* Register or log in.
+* Open Transport.
+* Select Road Tax.
+* Enter sample vehicle information.
+* Display the relevant payment amount as illustrative data.
+* Simulate payment.
+* Generate a digital demo receipt.
+* Display transaction history.
+
+DEMO 2: SMALL BUSINESS
+
+* Register a demo business.
+* Open the business dashboard.
+* Select a trading permit.
+* Complete a guided application.
+* Upload a sample document.
+* Display application status.
+
+DEMO 3: COUNCIL REVENUE INTELLIGENCE
+
+* Log in as a council officer.
+* View the council revenue dashboard.
+* Open the GIS revenue map.
+* Select an underperforming ward.
+* View its revenue statistics.
+* Ask the AI to analyse possible reasons.
+* Generate an investigation report.
+
+DEMO 4: ZRA OVERVIEW
+
+* Log in as an authorised ZRA administrator.
+* View consolidated revenue information.
+* Filter revenue by institution.
+* Filter by province and council.
+* View collection trends.
+* View flagged discrepancies.
+
+DEMO 5: INTELLECTUAL PROPERTY
+
+* Open the IP module.
+* Submit a sample invention description.
+* Run a simulated similarity analysis.
+* Display matching or potentially similar records from demo data.
+* Generate a preliminary report.
+* Demonstrate the patent application tracking interface.
+
+All simulated transactions and data must be visibly identified as DEMO or SIMULATED.
+
+Do not pretend to have live connections to government systems.
+
+⸻
+
+19. INTEGRATIONS
+
+Create an extensible integration layer.
+
+Prepare connectors and API interfaces for:
+
+* Government identity verification.
+* ZRA.
+* RTSA.
+* PACRA.
+* Councils.
+* ZESCO.
+* Banks.
+* Mobile money.
+* Insurance providers.
+* Educational institutions.
+* SMS and email services.
+
+Where actual API access or official partnerships are unavailable, use sandbox integrations and mock services.
+
+Clearly separate implemented integrations from planned integrations.
+
+Never fabricate official approval or live government access.
+
+⸻
+
+20. BUSINESS AND PLATFORM MANAGEMENT
+
+Build an administration module that allows the platform operator to:
+
+* Register participating institutions.
+* Configure available services.
+* Manage institutional accounts.
+* Assign roles.
+* Configure application workflows.
+* Manage service categories.
+* Monitor platform performance.
+* Monitor integration health.
+* Review transaction reconciliation.
+* Generate platform reports.
+* Manage notifications.
+* Manage support requests.
+* View audit logs.
+
+Include a configurable service onboarding process for future institutions.
+
+⸻
+
+21. SCALABILITY AND FUTURE EXPANSION
+
+Although the initial implementation focuses on Zambia, design OneGov so its architecture can eventually support other countries.
+
+Make the following configurable:
+
+* Country.
+* Currency.
+* Language.
+* Government institutions.
+* Administrative regions.
+* Payment providers.
+* Service categories.
+* Legal requirements.
+* Application workflows.
+
+Do not hardcode the entire platform around one institution.
+
+⸻
+
+22. DEVELOPMENT DELIVERABLES
+
+I want an actual working software project, not merely a conceptual explanation.
+
+Produce:
+
+1. Complete system architecture.
+2. Full application folder structure.
+3. Frontend source code.
+4. Backend source code.
+5. Database schema.
+6. Database migrations.
+7. API endpoints.
+8. Authentication and permissions.
+9. Functional dashboards.
+10. AI integration architecture.
+11. GIS revenue intelligence.
+12. Payment sandbox.
+13. Institutional portals.
+14. Sample datasets.
+15. Demo accounts.
+16. Automated tests.
+17. Environment configuration template.
+18. Docker configuration.
+19. Installation instructions.
+20. Deployment instructions.
+21. API documentation.
+22. Technical documentation.
+
+Use clean, maintainable and modular code.
+
+Do not leave major buttons non-functional.
+
+Do not substitute static screenshots for working features.
+
+If an external service requires credentials, provide a clearly documented configuration placeholder.
+
+⸻
+
+23. DEVELOPMENT APPROACH
+
+Build OneGov in structured phases.
+
+PHASE 1:
+Core architecture, database, authentication, user roles and responsive design.
+
+PHASE 2:
+Citizen services, service directory, applications and document management.
+
+PHASE 3:
+Payments, receipts, notifications and transaction history.
+
+PHASE 4:
+Business services and institutional portals.
+
+PHASE 5:
+ZRA revenue dashboard and council revenue intelligence.
+
+PHASE 6:
+AI intelligence, document processing and application assistance.
+
+PHASE 7:
+Patent and trademark services.
+
+PHASE 8:
+GIS, reporting, integrations and climate-conscious optimisation.
+
+PHASE 9:
+Security testing, performance testing, deployment and documentation.
+
+Prioritise a working end-to-end prototype while maintaining the architecture needed for the full platform.
+
+⸻
+
+24. IMPORTANT DEVELOPMENT RULES
+
+1. Do not remove any of the modules described in this specification.
+2. Do not turn OneGov into a simple government information website.
+3. Do not make the entire platform dependent on a chatbot.
+4. AI must be integrated into actual workflows and intelligence functions.
+5. Maintain the original OneGov idea.
+6. Make the platform affordable and friendly to small-business owners.
+7. Preserve the Greener Zambia direction through digital-first, paperless and efficient service delivery.
+8. Ensure institutions only access their authorised services and data.
+9. Provide ZRA with the appropriate consolidated revenue overview.
+10. Provide councils with detailed geographical revenue intelligence.
+11. Preserve human authority over official government decisions.
+12. Clearly distinguish simulated functionality from real integrations.
+13. Design for real-world deployment in Zambia.
+14. Prioritise security, transparency and accountability.
+15. Ensure the mobile experience is excellent.
+
+⸻
+
+25. FINAL PRODUCT OBJECTIVE
+
+ONEGOV should become a unified intelligent digital-government ecosystem.
+
+A citizen should not need to understand the complicated structure of government institutions to access a service.
+
+A small-business owner should not struggle to discover permits, licences and payment obligations.
+
+A council should be able to identify areas with poor revenue performance and investigate why.
+
+ZRA should have an appropriate consolidated view of participating revenue streams.
+
+Government institutions should be able to manage their own authorised services.
+
+An inventor should be able to access patent and trademark application assistance digitally.
+
+The entire ecosystem should operate through a secure, intelligent and interconnected platform.
+
+The ultimate vision:
+
+ONE CITIZEN.
+ONE ACCOUNT.
+ONE PLATFORM.
+EVERY GOVERNMENT SERVICE.
+
+Now begin by translating this specification into a detailed implementation plan, architecture, database design and complete working prototype.
+
+Do not silently omit requirements. Identify technical dependencies and implement the strongest functional version possible

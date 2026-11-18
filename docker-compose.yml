@@ -1,0 +1,33 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: onegov-postgres
+    environment:
+      POSTGRES_DB: onegov_zm
+      POSTGRES_USER: onegov_app
+      POSTGRES_PASSWORD: change_me_in_production
+    ports:
+      - "5432:5432"
+    volumes:
+      - onegov_pgdata:/var/lib/postgresql/data
+      - ./migrations:/docker-entrypoint-initdb.d
+
+  onegov-app:
+    build: .
+    container_name: onegov-web-api
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      SQL_HOST: postgres
+      SQL_DB_NAME: onegov_zm
+      SQL_USER: onegov_app
+      SQL_PASSWORD: change_me_in_production
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+    depends_on:
+      - postgres
+
+volumes:
+  onegov_pgdata:
