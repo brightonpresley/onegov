@@ -13,7 +13,12 @@ import {
   type FirestoreSavedLocation,
   type FirestoreVoiceNote,
 } from '../lib/firestoreStore';
-import { updateBreadcrumbTrail, type UserRole, type VoiceNoteSourceType } from '../lib/onegovRules';
+import {
+  isMajorModuleNavigation,
+  updateBreadcrumbTrail,
+  type UserRole,
+  type VoiceNoteSourceType,
+} from '../lib/onegovRules';
 import type {
   CitizenOverviewData,
   InstitutionItem,
@@ -46,6 +51,7 @@ interface OneGovContextValue {
   activeReceipt: PaymentItem | null;
   setActiveReceipt: (receipt: PaymentItem | null) => void;
   loading: boolean;
+  isBackgroundLoading: boolean;
   authError: string | null;
   isFirebaseUser: boolean;
   savedLocations: FirestoreSavedLocation[];
@@ -92,13 +98,32 @@ export const OneGovProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const didInitRef = useRef<boolean>(false);
   const [user, setUser] = useState<UserProfile | null>(null);
   const [activeScreen, setActiveScreenState] = useState<ScreenId>('welcome');
+  const activeScreenRef = useRef<ScreenId>('welcome');
   const [navigationTrail, setNavigationTrail] = useState<ScreenId[]>([]);
+  const [navTransitionLoading, setNavTransitionLoading] = useState<boolean>(false);
+  const navPulseTimerRef = useRef<number | null>(null);
+  const refreshWorkspaceRef = useRef<() => Promise<void>>(async () => {});
+  const refreshInFlightRef = useRef<boolean>(false);
 
   const setActiveScreen = useCallback((nextScreen: ScreenId, resetToRoot = false) => {
+    const prevScreen = activeScreenRef.current;
+    activeScreenRef.current = nextScreen;
     setActiveScreenState(nextScreen);
     setNavigationTrail((prev) =>
       updateBreadcrumbTrail(prev, nextScreen, { resetToRoot, maxLength: 5 }),
     );
+
+    if (isMajorModuleNavigation(prevScreen, nextScreen) && tokenRef.current) {
+      if (navPulseTimerRef.current !== null) {
+        window.clearTimeout(navPulseTimerRef.current);
+      }
+      setNavTransitionLoading(true);
+      navPulseTimerRef.current = window.setTimeout(() => {
+        setNavTransitionLoading(false);
+        navPulseTimerRef.current = null;
+      }, 280);
+      refreshWorkspaceRef.current().catch(() => undefined);
+    }
   }, []);
   const [institutions, setInstitutions] = useState<InstitutionItem[]>([]);
   const [services, setServices] = useState<ServiceItem[]>([]);
@@ -115,6 +140,7 @@ export const OneGovProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const [pendingCheckout, setPendingCheckout] = useState<PaymentCheckoutContext | null>(null);
   const [activeReceipt, setActiveReceipt] = useState<PaymentItem | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [pendingRequestCount, setPendingRequestCount] = useState<number>(0);
   const [authError, setAuthError] = useState<string | null>(null);
   const [isFirebaseReady, setIsFirebaseReady] = useState<boolean>(false);
   const [firebaseUid, setFirebaseUid] = useState<string | null>(null);
@@ -164,18 +190,23 @@ export const OneGovProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       if (activeTok) {
         headers.set('Authorization', `Bearer ${activeTok}`);
       }
-      const res = await fetch(url, { ...init, headers });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) {
-        if (res.status === 429) {
-          const msg = String((data as { error?: string }).error || '');
-          if (msg.includes('OVER_QUERY_LIMIT') || msg.includes('maps.googleapis.com')) {
-            window.dispatchEvent(new CustomEvent('gmp-quota-exceeded'));
+      setPendingRequestCount((c) => c + 1);
+      try {
+        const res = await fetch(url, { ...init, headers });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          if (res.status === 429) {
+            const msg = String((data as { error?: string }).error || '');
+            if (msg.includes('OVER_QUERY_LIMIT') || msg.includes('maps.googleapis.com')) {
+              window.dispatchEvent(new CustomEvent('gmp-quota-exceeded'));
+            }
           }
+          throw new Error((data as { error?: string }).error || `Request failed (${res.status})`);
         }
-        throw new Error((data as { error?: string }).error || `Request failed (${res.status})`);
+        return data as T;
+      } finally {
+        setPendingRequestCount((c) => Math.max(0, c - 1));
       }
-      return data as T;
     },
     [],
   );
@@ -307,6 +338,11 @@ export const OneGovProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     try {
       await signOut(auth).catch(() => undefined);
     } finally {
+      if (navPulseTimerRef.current !== null) {
+        window.clearTimeout(navPulseTimerRef.current);
+        navPulseTimerRef.current = null;
+      }
+      setNavTransitionLoading(false);
       tokenRef.current = null;
       setToken(null);
       setUser(null);
@@ -318,13 +354,30 @@ export const OneGovProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       setActiveReceipt(null);
       setActiveScreen('welcome', true);
     }
-  }, []);
+  }, [setActiveScreen]);
 
   const refreshWorkspace = useCallback(async () => {
     const activeTok = tokenRef.current;
-    if (!activeTok) return;
-    await Promise.all([loadPublicOverview(), fetchAuthenticatedData(activeTok)]);
+    if (!activeTok || refreshInFlightRef.current) return;
+    refreshInFlightRef.current = true;
+    try {
+      await Promise.all([loadPublicOverview(), fetchAuthenticatedData(activeTok)]);
+    } finally {
+      refreshInFlightRef.current = false;
+    }
   }, [loadPublicOverview, fetchAuthenticatedData]);
+
+  useEffect(() => {
+    refreshWorkspaceRef.current = refreshWorkspace;
+  }, [refreshWorkspace]);
+
+  useEffect(() => {
+    return () => {
+      if (navPulseTimerRef.current !== null) {
+        window.clearTimeout(navPulseTimerRef.current);
+      }
+    };
+  }, []);
 
   const openCheckout = useCallback((ctx: PaymentCheckoutContext) => {
     setPendingCheckout(ctx);
@@ -387,6 +440,7 @@ export const OneGovProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
   const unreadCount = notifications.filter((n) => !n.isRead).length;
   const isFirebaseUser = Boolean(isFirebaseReady && firebaseUid && isVerifiedFirebaseSession() && !user?.isDemo);
+  const isBackgroundLoading = loading || pendingRequestCount > 0 || navTransitionLoading;
 
   return (
     <OneGovContext.Provider
@@ -410,6 +464,7 @@ export const OneGovProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         activeReceipt,
         setActiveReceipt,
         loading,
+        isBackgroundLoading,
         authError,
         isFirebaseUser,
         savedLocations,

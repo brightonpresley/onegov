@@ -39,6 +39,7 @@ import {
   canApproveInstitutionalDecision,
   computeTextSimilarityScore,
   evaluateRevenueZone,
+  validateIssueReportInput,
   validateSandboxPaymentInput,
 } from './src/lib/onegovRules.ts';
 import {
@@ -1241,6 +1242,54 @@ app.post('/api/notifications/read-all', requireAuth, async (req: AuthRequest, re
   } catch (error) {
     console.error('Mark notifications read failed:', error);
     res.status(500).json({ error: 'Failed to mark notifications read.' });
+  }
+});
+
+app.post('/api/support/report-issue', requireAuth, async (req: AuthRequest, res) => {
+  try {
+    const actor = req.actor!;
+    const validation = validateIssueReportInput({
+      category: String(req.body?.category || ''),
+      subject: String(req.body?.subject || ''),
+      details: String(req.body?.details || ''),
+    });
+    if (!validation.valid || !validation.sanitized) {
+      return res.status(400).json({ error: validation.error });
+    }
+
+    const { category, subject, details } = validation.sanitized;
+    const activeScreen = String(req.body?.activeScreen || 'workspace').slice(0, 60);
+    const ticketCode = `ISS-OGV-2026-${Math.floor(1000 + Math.random() * 8999)}`;
+
+    await db.insert(notifications).values({
+      userId: actor.dbUserId,
+      channel: 'in_app',
+      category: 'support_ticket',
+      title: `Issue Logged (${ticketCode}): ${subject}`,
+      message: `[${category}] ${details}`,
+      isRead: false,
+    });
+
+    await writeAuditLog({
+      actorUid: actor.uid,
+      actorRole: actor.role,
+      institutionCode: actor.institutionCode,
+      action: 'REPORT_ISSUE',
+      targetEntity: ticketCode,
+      details: `${category} on ${activeScreen}: ${subject}`,
+    });
+
+    res.status(201).json({
+      ticket: {
+        ticketCode,
+        category,
+        subject,
+        status: 'logged',
+      },
+    });
+  } catch (error) {
+    console.error('Report issue error:', error);
+    res.status(500).json({ error: 'Failed to submit issue report.' });
   }
 });
 

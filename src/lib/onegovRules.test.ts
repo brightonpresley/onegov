@@ -5,17 +5,20 @@ import {
   calculateIllustrativeRoadTax,
   canAccessInstitutionRecords,
   canApproveInstitutionalDecision,
+  computeNextProgressValue,
   computeTextSimilarityScore,
   evaluateRevenueZone,
   extractMapsGroundingPlaces,
   extractSearchGroundingSources,
   filterGlobalServiceNavigation,
   getScreenDomainLabel,
+  isMajorModuleNavigation,
   parseZoneCoordinates,
   sanitizeFirestoreId,
   sanitizeSavedLocationInput,
   sanitizeVoiceNoteInput,
   updateBreadcrumbTrail,
+  validateIssueReportInput,
   validateSandboxPaymentInput,
 } from './onegovRules';
 
@@ -222,4 +225,44 @@ test('updateBreadcrumbTrail tracks hierarchy, truncates when returning, and pres
   assert.equal(getScreenDomainLabel('council-dashboard'), 'Revenue & GIS Intelligence');
   assert.deepEqual(updateBreadcrumbTrail(longTrail, 'welcome'), []);
 });
+
+test('validateIssueReportInput rejects short inputs and sanitizes valid reports', () => {
+  assert.equal(
+    validateIssueReportInput({ category: '', subject: 'Road tax', details: 'Cannot load receipt' }).valid,
+    false,
+  );
+  assert.equal(
+    validateIssueReportInput({ category: 'Application / SLA Delay', subject: 'Hi', details: 'More than ten characters' })
+      .valid,
+    false,
+  );
+  assert.equal(
+    validateIssueReportInput({ category: 'Application / SLA Delay', subject: 'Slow SLA', details: 'Short' }).valid,
+    false,
+  );
+
+  const ok = validateIssueReportInput({
+    category: '  Payment / Receipt Discrepancy ',
+    subject: '  Receipt RCPT-102 missing QR code  ',
+    details: '  Mobile money deduction completed but receipt preview timed out.  ',
+  });
+  assert.equal(ok.valid, true);
+  assert.equal(ok.sanitized?.category, 'Payment / Receipt Discrepancy');
+  assert.equal(ok.sanitized?.subject, 'Receipt RCPT-102 missing QR code');
+});
+
+test('isMajorModuleNavigation and computeNextProgressValue handle module transitions smoothly', () => {
+  assert.equal(isMajorModuleNavigation('welcome', 'citizen-dashboard'), false);
+  assert.equal(isMajorModuleNavigation('citizen-dashboard', 'welcome'), false);
+  assert.equal(isMajorModuleNavigation('transport', 'transport'), false);
+  assert.equal(isMajorModuleNavigation('citizen-dashboard', 'council-dashboard'), true);
+
+  let pct = computeNextProgressValue(0, 'loading');
+  assert.equal(pct, 26);
+  const nextPct = computeNextProgressValue(pct, 'loading');
+  assert.ok(nextPct > pct && nextPct <= 92);
+  assert.equal(computeNextProgressValue(nextPct, 'completing'), 100);
+  assert.equal(computeNextProgressValue(100, 'idle'), 0);
+});
+
 

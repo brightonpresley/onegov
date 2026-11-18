@@ -53,6 +53,8 @@ import {
 import { AiAssistantPanel } from './components/AiAssistantPanel';
 import { BreadcrumbTrail } from './components/BreadcrumbTrail';
 import { GlobalHeaderSearch } from './components/GlobalHeaderSearch';
+import { QuickActionsMenu } from './components/QuickActionsMenu';
+import { TopNavigationProgressBar } from './components/TopNavigationProgressBar';
 
 interface NavItem {
   id: ScreenId;
@@ -132,6 +134,7 @@ const WorkspaceShell: React.FC = () => {
     loginAsDemoRole,
     logout,
     loading,
+    isBackgroundLoading,
   } = useOneGov();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -195,6 +198,7 @@ const WorkspaceShell: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#f8fafc] text-slate-900 flex">
+      <TopNavigationProgressBar isLoading={isBackgroundLoading} />
       {/* Desktop Sidebar (256px) */}
       <aside className="hidden lg:flex lg:w-64 lg:flex-col bg-[#0B192C] text-slate-100 shrink-0">
         <div className="px-5 py-5 border-b border-white/10">
@@ -322,16 +326,29 @@ const WorkspaceShell: React.FC = () => {
             </div>
           </div>
 
-          <GlobalHeaderSearch
-            modules={visibleNav}
-            services={services}
-            activeScreen={activeScreen}
-            onSelectModule={(screenId) => setActiveScreen(screenId)}
-            onSelectService={(svc) => {
-              setSelectedService(svc);
-              setActiveScreen('application-workflow');
-            }}
-          />
+          <div className="order-last w-full md:order-none md:flex-1 md:max-w-xl flex items-center gap-2">
+            <GlobalHeaderSearch
+              modules={visibleNav}
+              services={services}
+              activeScreen={activeScreen}
+              onSelectModule={(screenId) => setActiveScreen(screenId)}
+              onSelectService={(svc) => {
+                setSelectedService(svc);
+                setActiveScreen('application-workflow');
+              }}
+            />
+            <QuickActionsMenu
+              activeScreen={activeScreen}
+              onStartNewApplication={() => {
+                if (!selectedService && services.length > 0) {
+                  setSelectedService(services[0]);
+                }
+                setActiveScreen('application-workflow');
+              }}
+              onCheckApplicationStatus={() => setActiveScreen('application-tracking')}
+              onOpenNotifications={() => setActiveScreen('notifications')}
+            />
+          </div>
 
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             <div className="hidden sm:block text-xs font-mono text-amber-800 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded whitespace-nowrap">

@@ -625,3 +625,57 @@ export function updateBreadcrumbTrail<T extends string>(
   return [...currentTrail, nextScreen];
 }
 
+export const ISSUE_REPORT_CATEGORIES = [
+  'Application / SLA Delay',
+  'Payment / Receipt Discrepancy',
+  'Document Upload / OCR Issue',
+  'Council GIS / Ward Data',
+  'Technical / Accessibility Bug',
+] as const;
+
+export function validateIssueReportInput(params: {
+  category: string;
+  subject: string;
+  details: string;
+}): { valid: boolean; error?: string; sanitized?: { category: string; subject: string; details: string } } {
+  const category = params.category.trim();
+  const subject = params.subject.trim();
+  const details = params.details.trim();
+
+  if (!category) {
+    return { valid: false, error: 'Please select an issue category.' };
+  }
+  if (subject.length < 4) {
+    return { valid: false, error: 'Please provide a brief subject (at least 4 characters).' };
+  }
+  if (details.length < 10) {
+    return { valid: false, error: 'Please describe the issue in at least 10 characters.' };
+  }
+  return {
+    valid: true,
+    sanitized: {
+      category: category.slice(0, 80),
+      subject: subject.slice(0, 140),
+      details: details.slice(0, 1500),
+    },
+  };
+}
+
+export type TopProgressPhase = 'idle' | 'loading' | 'completing';
+
+export function isMajorModuleNavigation(prevScreen: string, nextScreen: string): boolean {
+  if (!prevScreen || !nextScreen) return false;
+  if (prevScreen === 'welcome' || nextScreen === 'welcome') return false;
+  return prevScreen !== nextScreen;
+}
+
+export function computeNextProgressValue(currentProgress: number, phase: TopProgressPhase): number {
+  if (phase === 'idle') return 0;
+  if (phase === 'completing') return 100;
+  const clamped = Math.max(0, Math.min(92, currentProgress));
+  if (clamped < 18) return 26;
+  const next = clamped + (92 - clamped) * 0.28;
+  return Math.min(92, Math.round(next * 10) / 10);
+}
+
+

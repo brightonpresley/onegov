@@ -141,7 +141,7 @@ export const GlobalHeaderSearch: React.FC<GlobalHeaderSearchProps> = ({
   return (
     <div
       ref={containerRef}
-      className="relative order-last w-full md:order-none md:flex-1 md:max-w-md"
+      className="relative flex-1 min-w-0"
     >
       <div className="relative flex items-center">
         <Search
